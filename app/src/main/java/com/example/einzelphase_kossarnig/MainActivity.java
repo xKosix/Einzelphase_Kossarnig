@@ -3,6 +3,7 @@ package com.example.einzelphase_kossarnig;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +19,41 @@ public class MainActivity extends AppCompatActivity {
         TextView response = findViewById(R.id.textView);
         EditText mtnr = (EditText) findViewById(R.id.editTextNumber);
         Button button_send_Mtnr = findViewById(R.id.sendMat);
-        Button quersumme = findViewById(R.id.calculateMat);
+        Button Berechne = findViewById(R.id.calculateMat);
+
+        button_send_Mtnr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                response.setVisibility(View.VISIBLE);   //macht die anzeige für den Server status visible
+                //int mtnrInt = Integer.parseInt(mtnr.getText().toString());   // ließt die eingabe als int aus und speichert sie
+                String mtnrString = mtnr.getText().toString();
+                RequestThread uniconnection = new RequestThread(mtnrString);
+                uniconnection.start();
+                try {
+                    uniconnection.join();
+                } catch (InterruptedException ie) {
+
+                }
+                response.setText("Der Server sagt: " + uniconnection.getAnswer());
+            }
+        });
+
+        Berechne.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                response.setVisibility(View.VISIBLE);
+                response.setText("Die Alternierende Quersummer von " + mtnr.getText().toString() + " ist: " +berechneMat(mtnr.getText().toString()));
+            }
+
+        });
 
 
+    }
 
+    private String berechneMat(String toString) {
+
+
+        return toString;
     }
 }
