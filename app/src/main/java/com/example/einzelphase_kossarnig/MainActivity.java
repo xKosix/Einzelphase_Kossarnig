@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 response.setVisibility(View.VISIBLE);   //macht die anzeige für den Server status visible
-                //int mtnrInt = Integer.parseInt(mtnr.getText().toString());   // ließt die eingabe als int aus und speichert sie
-                String mtnrString = mtnr.getText().toString();
-                RequestThread uniconnection = new RequestThread(mtnrString);
+                int mtnrInt = Integer.parseInt(mtnr.getText().toString());   // ließt die eingabe als int aus und speichert sie
+                //String mtnrString = mtnr.getText().toString();
+                RequestThread uniconnection = new RequestThread(Integer.toString(mtnrInt));
                 uniconnection.start();
                 try {
                     uniconnection.join();
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 response.setVisibility(View.VISIBLE);
-                response.setText("Die Alternierende Quersummer von " + mtnr.getText().toString() + " ist: " +berechneMat(mtnr.getText().toString()));
+                response.setText("Die Alternierende Quersummer von " + mtnr.getText().toString() + " ist: " +berechneMat(Integer.parseInt(String.valueOf(mtnr.getText()))));
             }
 
         });
@@ -51,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private String berechneMat(String toString) {
+    private int berechneMat(int mtnr) {
+        char[] digits = String.valueOf(mtnr).toCharArray();
+        int sum = digits[0] - digits[1] + digits[2] - digits[3] + digits[4] - digits[5] + digits[6] - digits[7];
 
-
-        return toString;
+        return sum;
     }
 }
